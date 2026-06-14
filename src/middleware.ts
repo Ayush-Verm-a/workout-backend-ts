@@ -10,8 +10,6 @@ export function middlewareAuth(
 ) {
   return async (req: Request, res: Response) => {
     try {
-      console.log("Middleware Auth");
-      console.log(req.headers.authorization);
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
         throw new Error("User not authenticated");

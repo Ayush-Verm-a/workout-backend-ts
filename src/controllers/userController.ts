@@ -6,7 +6,6 @@ import { middlewareAuth } from "../middleware.js";
 const router = express.Router();
 
 async function getUser(req: Request, res: Response, user: User) {
-  console.log("/api/users/me");
   try {
     const profile = { name: user.name, email: user.email, role: user.role };
     respondWithJSON(res, 200, profile);

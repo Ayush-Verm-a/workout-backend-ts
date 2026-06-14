@@ -10,7 +10,13 @@ import {
 export async function getAllDefinitions(user: User) {
   assertDbConnection();
   const rows = await db!
-    .select()
+    .select({
+      name: exerciseDefinitionsTable.name,
+      muscleGroup: exerciseDefinitionsTable.muscleGroup,
+      category: exerciseDefinitionsTable.category,
+      description: exerciseDefinitionsTable.description,
+      difficulty: exerciseDefinitionsTable.difficulty,
+    })
     .from(exerciseDefinitionsTable)
     .innerJoin(usersTable, eq(exerciseDefinitionsTable.user, usersTable.id))
     .where(
@@ -22,7 +28,7 @@ export async function getAllDefinitions(user: User) {
   return rows;
 }
 
-export async function addDefinition(def: NewExerciseDefinition) {
+export async function addNewDefinition(def: NewExerciseDefinition) {
   assertDbConnection();
 
   const rows = await db!

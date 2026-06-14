@@ -8,7 +8,7 @@ export const usersTable = sqliteTable("users", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   password: text("password").notNull(),
-  role: text("role").$defaultFn(() => "USER"),
+  role: text("role").$defaultFn(() => "FREE USER"),
 });
 
 export type NewUser = typeof usersTable.$inferInsert;
@@ -27,6 +27,9 @@ export const workoutsTable = sqliteTable("workouts", {
     .references(() => usersTable.id, { onDelete: "cascade" }),
 });
 
+export type NewWorkout = typeof workoutsTable.$inferInsert;
+export type Workout = typeof workoutsTable.$inferSelect;
+
 export const setsTable = sqliteTable("exercise_sets", {
   id: text("id", { length: 36 })
     .primaryKey()
@@ -42,16 +45,21 @@ export const setsTable = sqliteTable("exercise_sets", {
     .references(() => exerciseDefinitionsTable.id, { onDelete: "cascade" }),
 });
 
+export type NewSet = typeof setsTable.$inferInsert;
+export type Set = typeof setsTable.$inferSelect;
+
 export const exerciseDefinitionsTable = sqliteTable("exercise_definitions", {
-  id: text("id", { length: 36 }).notNull(),
+  id: text("id", { length: 36 })
+    .primaryKey()
+    .$defaultFn(() => randomUUID()),
   name: text("name").notNull(),
   muscleGroup: text("muscle_group").notNull(),
   category: text("category").notNull(),
   description: text("description").notNull(),
   difficulty: text("difficulty").notNull(),
-  user: text("user_id")
-    .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
+  user: text("user_id").references(() => usersTable.id, {
+    onDelete: "cascade",
+  }),
 });
 
 export type NewExerciseDefinition =

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "0cc57958-05ef-43d3-ac35-3224ca5a37ca",
+  "id": "87b39e3e-200b-4e15-822a-f7a5a0947866",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "exercise_definitions": {
@@ -10,7 +10,7 @@
         "id": {
           "name": "id",
           "type": "text(36)",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
@@ -53,7 +53,7 @@
           "name": "user_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -184,7 +184,7 @@
           "name": "password",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "role": {
