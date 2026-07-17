@@ -1,0 +1,1 @@
+ALTER TABLE `workouts` RENAME COLUMN "caloriesBurned" TO "calories_burned";

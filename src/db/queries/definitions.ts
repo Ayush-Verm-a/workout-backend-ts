@@ -11,6 +11,7 @@ export async function getAllDefinitions(user: User) {
   assertDbConnection();
   const rows = await db!
     .select({
+      id: exerciseDefinitionsTable.id,
       name: exerciseDefinitionsTable.name,
       muscleGroup: exerciseDefinitionsTable.muscleGroup,
       category: exerciseDefinitionsTable.category,

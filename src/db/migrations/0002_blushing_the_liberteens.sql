@@ -1,0 +1,1 @@
+ALTER TABLE `exercise_sets` RENAME COLUMN "weights" TO "weight";

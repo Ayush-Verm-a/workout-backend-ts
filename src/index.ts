@@ -4,6 +4,7 @@ import authRouter from "./controllers/authController.js";
 import userRouter from "./controllers/userController.js";
 import workoutRouter from "./controllers/workoutController.js";
 import definitionRouter from "./controllers/exerciseDefinitionController.js";
+import agentRouter from "./controllers/agentController.js";
 import { config } from "./config.js";
 
 const app = express();
@@ -24,6 +25,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/workouts", workoutRouter);
 app.use("/api/definitions", definitionRouter);
+app.use("/api/chat", agentRouter);
 
 app.listen(config.api.port, () => {
   console.log(`Server is running on port: ${config.api.port}`);

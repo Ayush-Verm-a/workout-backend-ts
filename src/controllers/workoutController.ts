@@ -4,7 +4,9 @@ import { middlewareAuth } from "../middleware.js";
 import {
   addSet,
   addUserWorkout,
+  deleteUserWorkout,
   getAllWorkouts,
+  getSingleWorkout,
 } from "../db/queries/workouts.js";
 import { respondWithError, respondWithJSON } from "../json.js";
 
@@ -28,7 +30,7 @@ async function addWorkout(req: Request, res: Response, user: User) {
     const { title, duration, caloriesBurned, sets } = req.body;
     const newWorkout: NewWorkout = {
       title: title,
-      date: Date.now().toString(),
+      date: new Date().toISOString(),
       duration: duration,
       caloriesBurned: caloriesBurned,
       userId: user.id,
@@ -42,7 +44,7 @@ async function addWorkout(req: Request, res: Response, user: User) {
     for (const s of sets) {
       const newSet: NewSet = {
         setNumber: s.setNumber,
-        weights: s.weights,
+        weights: s.weight,
         reps: s.reps,
         definition: s.definition,
         workout: workout[0].id,
@@ -62,15 +64,32 @@ async function addWorkout(req: Request, res: Response, user: User) {
 
 async function getWorkout(req: Request, res: Response, user: User) {
   try {
-    console.log(req.body);
-    console.log(req.params.id);
-  } catch (error) {}
+    const id = req.params.id as string;
+    const workout = await getSingleWorkout(id, user.id);
+
+    if (!workout) {
+      throw new Error("Couldn't get workout");
+    }
+
+    respondWithJSON(res, 200, workout);
+  } catch (error) {
+    respondWithError(res, 500, "Couldn't get workout", error);
+  }
 }
 
 async function deleteWorkout(req: Request, res: Response, user: User) {
   try {
-    console.log(req.body);
-  } catch (error) {}
+    const id = req.params.id as string;
+
+    const rows = await deleteUserWorkout(id, user.id);
+    if (rows.length === 0) {
+      throw new Error("Workout not found or unauthorized");
+    }
+
+    respondWithJSON(res, 200, "Workout deleted successfully");
+  } catch (error) {
+    respondWithError(res, 500, "Couldn't delete workout", error);
+  }
 }
 
 router.get("/", middlewareAuth(getWorkouts));

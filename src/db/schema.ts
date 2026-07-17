@@ -21,7 +21,7 @@ export const workoutsTable = sqliteTable("workouts", {
   title: text("title"),
   date: text("date").notNull(),
   duration: integer("duration").notNull(),
-  caloriesBurned: integer("caloriesBurned").notNull(),
+  caloriesBurned: integer("calories_burned").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
@@ -35,7 +35,7 @@ export const setsTable = sqliteTable("exercise_sets", {
     .primaryKey()
     .$defaultFn(() => randomUUID()),
   setNumber: integer("set_number").notNull(),
-  weights: real("weights").notNull(),
+  weights: real("weight").notNull(),
   reps: integer("reps").notNull(),
   workout: text("workout_id")
     .notNull()

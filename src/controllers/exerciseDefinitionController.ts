@@ -50,6 +50,6 @@ async function addDefinition(req: Request, res: Response) {
 
 router.get("/", middlewareAuth(getDefinitions));
 
-router.post("/", addDefinition);
+router.post("/", middlewareAuth(addDefinition));
 
 export default router;
