@@ -12,7 +12,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://*", "http://localhost:5173"],
+    origin: [
+      "https://*",
+      "http://localhost:5173",
+      "https://workout-app-gules.vercel.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: "*",
     exposedHeaders: ["Link"],
